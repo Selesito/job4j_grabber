@@ -14,11 +14,12 @@ import java.time.temporal.ChronoField;
 import java.util.*;
 
 public class SqlRuDateTimeParser implements DateTimeParser {
+
     @Override
     public LocalDateTime parse(String pars) {
         LocalDateTime date;
 
-        Map<Long, String> monthName = new HashMap<>();
+        final Map<Long, String> monthName = new HashMap<>();
         monthName.put(1L, "янв");
         monthName.put(2L, "фев");
         monthName.put(3L, "мар");
@@ -32,30 +33,31 @@ public class SqlRuDateTimeParser implements DateTimeParser {
         monthName.put(11L, "ноя");
         monthName.put(12L, "дек");
 
-        DateTimeFormatter formatter = new  DateTimeFormatterBuilder()
+        final DateTimeFormatter formatter = new  DateTimeFormatterBuilder()
                 .appendPattern("d ")
                 .appendText(ChronoField.MONTH_OF_YEAR, monthName)
                 .appendPattern(" yy, ")
                 .appendPattern("HH:mm")
                 .toFormatter();
-
         int index = pars.indexOf(",");
         if (pars.contains("сегодня")) {
-            pars = pars.substring(index + 2);
-            String[] rsl = pars.split(":");
-            int hours = Integer.parseInt(rsl[0]);
-            int minutes = Integer.parseInt(rsl[1]);
-            date = LocalDate.now().atTime(hours, minutes);
+            int[] time = parseTime(pars, index);
+            date = LocalDate.now().atTime(time[0], time[1]);
         } else if (pars.contains("вчера")) {
-            pars = pars.substring(index + 2);
-            String[] rsl = pars.split(":");
-            int minutes = Integer.parseInt(rsl[1]);
-            int hours = Integer.parseInt(rsl[0]);
-            date = LocalDate.now().atTime(hours, minutes).minusDays(1);
+            int[] time = parseTime(pars, index);
+            date = LocalDate.now().atTime(time[0], time[1]).minusDays(1);
         } else {
             date = LocalDateTime.parse(pars, formatter);
         }
         return date;
+    }
+
+    private int[] parseTime(String pars, int index) {
+        pars = pars.substring(index + 2);
+        String[] rsl = pars.split(":");
+        int hours = Integer.parseInt(rsl[0]);
+        int minutes = Integer.parseInt(rsl[1]);
+        return new int[] {hours, minutes};
     }
 }
 
