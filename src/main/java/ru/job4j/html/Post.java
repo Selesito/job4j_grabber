@@ -1,39 +1,61 @@
 package ru.job4j.html;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Post {
-    private String autor;
-    private String description;
-    private LocalDateTime date;
+    private long id;
+    private String name;
+    private String text;
+    private String link;
+    private LocalDateTime created;
 
-    public Post(String autor, String description, LocalDateTime date) {
-        this.autor = autor;
-        this.description = description;
-        this.date = date;
+    public Post(long id, String name, String text, String link, LocalDateTime created) {
+        this.id = id;
+        this.name = name;
+        this.text = text;
+        this.link = link;
+        this.created = created;
     }
 
-    public String getAutor() {
-        return autor;
+    public long getId() {
+        return id;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
+    public String getName() {
+        return name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getText() {
+        return text;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getLink() {
+        return link;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Post post = (Post) o;
+        return id == post.id
+                && Objects.equals(name, post.name)
+                && Objects.equals(text, post.text)
+                && Objects.equals(link, post.link)
+                && Objects.equals(created, post.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, text, link, created);
     }
 }
