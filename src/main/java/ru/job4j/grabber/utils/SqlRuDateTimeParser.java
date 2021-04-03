@@ -15,30 +15,33 @@ import java.util.*;
 
 public class SqlRuDateTimeParser implements DateTimeParser {
 
+    private static final Map<Long, String> MONTHS = new HashMap<>();
+
+    static {
+        MONTHS.put(1L, "янв");
+        MONTHS.put(2L, "фев");
+        MONTHS.put(3L, "мар");
+        MONTHS.put(4L, "апр");
+        MONTHS.put(5L, "май");
+        MONTHS.put(6L, "июн");
+        MONTHS.put(7L, "июл");
+        MONTHS.put(8L, "авг");
+        MONTHS.put(9L, "сен");
+        MONTHS.put(10L, "окт");
+        MONTHS.put(11L, "ноя");
+        MONTHS.put(12L, "дек");
+    }
+
+    private static final DateTimeFormatter FORMATTER = new  DateTimeFormatterBuilder()
+            .appendPattern("d ")
+            .appendText(ChronoField.MONTH_OF_YEAR, MONTHS)
+            .appendPattern(" yy, ")
+            .appendPattern("HH:mm")
+            .toFormatter();
+
     @Override
     public LocalDateTime parse(String pars) {
         LocalDateTime date;
-
-        final Map<Long, String> monthName = new HashMap<>();
-        monthName.put(1L, "янв");
-        monthName.put(2L, "фев");
-        monthName.put(3L, "мар");
-        monthName.put(4L, "апр");
-        monthName.put(5L, "май");
-        monthName.put(6L, "июн");
-        monthName.put(7L, "июл");
-        monthName.put(8L, "авг");
-        monthName.put(9L, "сен");
-        monthName.put(10L, "окт");
-        monthName.put(11L, "ноя");
-        monthName.put(12L, "дек");
-
-        final DateTimeFormatter formatter = new  DateTimeFormatterBuilder()
-                .appendPattern("d ")
-                .appendText(ChronoField.MONTH_OF_YEAR, monthName)
-                .appendPattern(" yy, ")
-                .appendPattern("HH:mm")
-                .toFormatter();
         int index = pars.indexOf(",");
         if (pars.contains("сегодня")) {
             int[] time = parseTime(pars, index);
@@ -47,7 +50,7 @@ public class SqlRuDateTimeParser implements DateTimeParser {
             int[] time = parseTime(pars, index);
             date = LocalDate.now().atTime(time[0], time[1]).minusDays(1);
         } else {
-            date = LocalDateTime.parse(pars, formatter);
+            date = LocalDateTime.parse(pars, FORMATTER);
         }
         return date;
     }
