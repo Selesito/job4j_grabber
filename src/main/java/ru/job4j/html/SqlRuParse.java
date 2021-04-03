@@ -34,11 +34,14 @@ public class SqlRuParse implements Parse {
     @Override
     public List<Post> list(String link) throws IOException {
         List<Post> posts = new ArrayList<>();
-        Document doc = Jsoup.connect(link).get();
-        Elements row = doc.select(".postslisttopic");
-        for (int i = 0; i < row.size(); i++) {
-            Element href = row.get(i).child(0);
-            posts.add(detail((href.attr("href"))));
+        for (int j = 1; j < 30; j++) {
+            String linkPage = String.format(link + "%d", j);
+            Document doc = Jsoup.connect(linkPage).get();
+            Elements row = doc.select(".postslisttopic");
+            for (int i = 0; i < row.size(); i++) {
+                Element href = row.get(i).child(0);
+                posts.add(detail((href.attr("href"))));
+            }
         }
         return posts;
     }
