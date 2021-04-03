@@ -18,6 +18,10 @@ public class Post {
         this.created = created;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }
