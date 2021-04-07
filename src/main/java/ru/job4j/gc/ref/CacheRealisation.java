@@ -14,10 +14,15 @@ import java.util.stream.Collectors;
 
 public class CacheRealisation {
     private final Map<String, SoftReference<String>> cache = new HashMap<>();
+    private String paths;
 
-    public String readfile(String fileName) {
+    public CacheRealisation(String paths) {
+        this.paths = paths;
+    }
+
+    private String readfile(String fileName) {
         String tmp = "";
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(paths + fileName))) {
             tmp = bufferedReader.lines().collect(Collectors.joining(" "));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -27,21 +32,22 @@ public class CacheRealisation {
         return tmp;
     }
 
-    public void getHash(String fileName) {
+    public String getHash(String fileName) {
         String strong = "";
         if (cache.containsKey(fileName)) {
-            System.out.println("Этот файл уже в кэше: " + fileName);
+            strong = cache.get(fileName).get();
         } else {
             strong = readfile(fileName);
             cache.put(fileName, new SoftReference<>(strong));
         }
+        return strong;
     }
 
     public static void main(String[] args) {
-        CacheRealisation cr = new CacheRealisation();
-        cr.getHash("db/Address.txt");
-        cr.getHash("db/Names.txt");
-        cr.getHash("db/Address.txt");
+        CacheRealisation cr = new CacheRealisation("./db/");
+        System.out.println(cr.getHash("Address.txt"));
+        System.out.println(cr.getHash("Names.txt"));
+        System.out.println(cr.getHash("Address.txt"));
         for (Map.Entry<String, SoftReference<String>> pair : cr.cache.entrySet()) {
             String key = pair.getKey();
             SoftReference<String> value = pair.getValue();
