@@ -36,6 +36,10 @@ public class CacheRealisation {
         String strong = "";
         if (cache.containsKey(fileName)) {
             strong = cache.get(fileName).get();
+            if (strong == null) {
+                strong = readfile(fileName);
+                cache.put(fileName, new SoftReference<>(strong));
+            }
         } else {
             strong = readfile(fileName);
             cache.put(fileName, new SoftReference<>(strong));
