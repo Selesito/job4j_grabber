@@ -12,10 +12,11 @@ public class ReportEngineTest {
     @Test
     public void whenOldGenerated() {
         MemStore store = new MemStore();
+        WriteReport write = new WriteReport("./db/report.html");
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        Report engine = new ReportEngine(store);
+        Report engine = new ReportEngine(store, write);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator())
@@ -24,12 +25,13 @@ public class ReportEngineTest {
                 .append(worker.getFired()).append(";")
                 .append(worker.getSalary()).append(";")
                 .append(System.lineSeparator());
-        assertThat(engine.generate(em -> true), is(expect.toString()));
+        assertThat(engine.generate(em -> true, "./db/report.html"), is(expect.toString()));
     }
 
     @Test
     public void whenOldGeneratedHR() {
         MemStore store = new MemStore();
+        WriteReport write = new WriteReport("./db/report.html");
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         Employee worker1 = new Employee("Petr", now, now, 180);
@@ -37,7 +39,7 @@ public class ReportEngineTest {
         store.add(worker);
         store.add(worker1);
         store.add(worker2);
-        Report engine = new ReportEngine(store);
+        Report engine = new ReportEngine(store, write);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Salary")
                 .append(System.lineSeparator())
@@ -50,6 +52,6 @@ public class ReportEngineTest {
                 .append(worker.getName()).append(";")
                 .append(worker.getSalary()).append(";")
                 .append(System.lineSeparator());
-        assertThat(engine.generate(em -> true), is(expect.toString()));
+        assertThat(engine.generate(em -> true, "./db/report.html"), is(expect.toString()));
     }
 }
