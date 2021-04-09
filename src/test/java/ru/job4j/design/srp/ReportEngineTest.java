@@ -4,6 +4,8 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.Test;
+
+import javax.xml.bind.JAXBException;
 import java.util.Calendar;
 
 public class ReportEngineTest {
@@ -16,7 +18,7 @@ public class ReportEngineTest {
     private Employee worker2 = new Employee("Vasya", now, now, 130);
 
     @Test
-    public void whenOldGenerated() {
+    public void whenOldGenerated() throws JAXBException {
         store.add(worker);
         Report engine = new ReportEngine(store);
         StringBuilder expect = new StringBuilder()
@@ -31,7 +33,7 @@ public class ReportEngineTest {
     }
 
     @Test
-    public void whenGeneratedHR() {
+    public void whenGeneratedHR() throws JAXBException {
         store.add(worker);
         store.add(worker1);
         store.add(worker2);
@@ -52,7 +54,7 @@ public class ReportEngineTest {
     }
 
     @Test
-    public void whenGeneratedProgrammer() {
+    public void whenGeneratedProgrammer() throws JAXBException {
         store.add(worker);
         store.add(worker1);
         store.add(worker2);
@@ -76,5 +78,23 @@ public class ReportEngineTest {
                 .append(worker2.getSalary()).append(";")
                 .append(System.lineSeparator());
         assertThat(programmer.generate(em -> true), is(expect.toString()));
+    }
+
+    @Test
+    public void whenGeneratedJson() throws JAXBException {
+        store.add(worker);
+        Report json = new ReportJson(store);
+        String expected = "{\"employees\":[{\"name\":\"Ivan\",\"salary\":100}]}";
+        assertThat(json.generate(em -> true), is(expected));
+    }
+
+    @Test
+    public void whenGeneratedXML() throws JAXBException {
+        store.add(worker);
+        Report report = new ReportXml(store);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
+                + "<employee name=\"Ivan\" salary=\"100.0\"/>\n";
+        assertThat(report.generate(em -> true), is(expected));
+
     }
 }
