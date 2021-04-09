@@ -2,12 +2,13 @@ package ru.job4j.design.srp;
 
 import java.util.function.Predicate;
 
-public class ReportEngine implements Report {
-
+public class ReportProgrammer implements Report {
     private Store store;
+    private WriteReport writeReport;
 
-    public ReportEngine(Store store) {
+    public ReportProgrammer(Store store, WriteReport report) {
         this.store = store;
+        this.writeReport = report;
     }
 
     @Override
@@ -22,6 +23,7 @@ public class ReportEngine implements Report {
                     .append(employee.getSalary()).append(";")
                     .append(System.lineSeparator());
         }
+        writeReport.write(text.toString(), writeReport.getFile());
         return text.toString();
     }
 }

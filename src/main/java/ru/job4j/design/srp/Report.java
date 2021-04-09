@@ -4,5 +4,5 @@ import java.util.function.Predicate;
 
 public interface Report {
 
-    String generate(Predicate<Employee> filter, String file);
+    String generate(Predicate<Employee> filter);
 }

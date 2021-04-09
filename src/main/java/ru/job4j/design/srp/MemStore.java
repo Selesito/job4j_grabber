@@ -15,7 +15,7 @@ public class MemStore implements Store {
 
     @Override
     public List<Employee> findBy(Predicate<Employee> filter) {
-        return employees.stream().filter(filter).sorted(new SortSalary())
+        return employees.stream().filter(filter)
                 .collect(Collectors.toList());
     }
 }
