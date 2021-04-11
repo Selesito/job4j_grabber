@@ -26,8 +26,8 @@ public class ReportXml implements Report {
         try (StringWriter writer = new StringWriter()) {
             for (Employee employee : store.findBy(filter)) {
                 marshaller.marshal(employee, writer);
-                xml = writer.getBuffer().toString();
             }
+            xml = writer.getBuffer().toString();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JAXBException e) {
