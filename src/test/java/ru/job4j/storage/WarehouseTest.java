@@ -4,9 +4,7 @@ import org.junit.Test;
 import ru.job4j.storage.food.Cheese;
 import ru.job4j.storage.food.Meat;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static org.junit.Assert.*;

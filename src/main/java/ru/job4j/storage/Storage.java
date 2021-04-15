@@ -1,8 +1,7 @@
 package ru.job4j.storage;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public abstract class Storage {
@@ -40,10 +39,20 @@ public abstract class Storage {
         this.food = food;
     }
 
-     void add(Food food) {
-        if (check(food)) {
+     public boolean add(Food food) {
+        boolean result = check(food);
+        if (result) {
             this.food.add(food);
         }
+        return result;
+    }
+
+    public double calcPercent(Food food) {
+        double shelfLife = food.getExpiryDate().getTimeInMillis() - food.getCreatedDate()
+                .getTimeInMillis();
+        double shelfExpired = new GregorianCalendar().getTimeInMillis() - food.getCreatedDate()
+                .getTimeInMillis();
+        return (shelfExpired * 100.0) / shelfLife;
     }
 
     public abstract boolean check(Food food);

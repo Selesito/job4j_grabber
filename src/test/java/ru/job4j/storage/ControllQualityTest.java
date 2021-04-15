@@ -1,6 +1,5 @@
 package ru.job4j.storage;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import ru.job4j.storage.food.Apple;
 import ru.job4j.storage.food.Banana;
@@ -29,7 +28,7 @@ public class ControllQualityTest {
                 new GregorianCalendar(2021, Calendar.APRIL, 8), 250.0, 0.0);
         Cheese cheese = new Cheese("Сыр", new GregorianCalendar(2021, Calendar.APRIL, 25),
                 new GregorianCalendar(2021, Calendar.APRIL, 1), 550.0, 0.0);
-        Apple apple = new Apple("Зеленые", new GregorianCalendar(2021, Calendar.APRIL, 15),
+        Apple apple = new Apple("Зеленые", new GregorianCalendar(2021, Calendar.APRIL, 18),
                 new GregorianCalendar(2021, Calendar.MARCH, 10), 200.0, 0.0);
         List<Food> foods = Arrays.asList(banana, meat, cheese, apple);
         control.productDistributor(foods);
