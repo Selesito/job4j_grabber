@@ -95,11 +95,11 @@ public class ReportEngineTest {
         store.add(worker2);
         Report report = new ReportXml(store);
         String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-                + "<employee name=\"Ivan\" salary=\"100.0\"/>\n"
-                + "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-                + "<employee name=\"Petr\" salary=\"180.0\"/>\n"
-                + "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-                + "<employee name=\"Vasya\" salary=\"130.0\"/>\n";
+                + "<employees>\n"
+                + "    <employee name=\"Ivan\" salary=\"100.0\"/>\n"
+                + "    <employee name=\"Petr\" salary=\"180.0\"/>\n"
+                + "    <employee name=\"Vasya\" salary=\"130.0\"/>\n"
+                + "</employees>\n";
         assertThat(report.generate(em -> true), is(expected));
 
     }

@@ -19,20 +19,20 @@ public class ReportXml implements Report {
 
     @Override
     public String generate(Predicate<Employee> filter) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(Employee.class);
+        Employees employees = new Employees();
+        JAXBContext context = JAXBContext.newInstance(Employees.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         String xml = "";
         try (StringWriter writer = new StringWriter()) {
-            for (Employee employee : store.findBy(filter)) {
-                marshaller.marshal(employee, writer);
-            }
+            employees.setEmployees(store.findBy(em -> true));
+            marshaller.marshal(employees, writer);
             xml = writer.getBuffer().toString();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-        return xml.toString();
+        return xml;
     }
 }
