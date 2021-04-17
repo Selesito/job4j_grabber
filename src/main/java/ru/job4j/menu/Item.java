@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Item {
     private String name;
+    private Action action = new ClickAction();
     private List<Item> listItems = new ArrayList();
 
     public Item(String name) {
@@ -25,5 +26,13 @@ public class Item {
 
     public void setListItems(Item item) {
         this.listItems.add(item);
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
 }
