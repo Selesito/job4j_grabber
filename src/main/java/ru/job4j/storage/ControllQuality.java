@@ -1,5 +1,6 @@
 package ru.job4j.storage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControllQuality {
@@ -15,5 +16,16 @@ public class ControllQuality {
                 storage.add(food);
             }
         }
+    }
+
+    public void resort() {
+        List<Food> foods = new ArrayList<>();
+        for (Storage storage : storages) {
+            for (Food food : storage.getFood()) {
+                foods.add(food);
+            }
+            storage.clear();
+        }
+        productDistributor(foods);
     }
 }

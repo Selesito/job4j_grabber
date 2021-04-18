@@ -56,4 +56,8 @@ public abstract class Storage {
     }
 
     public abstract boolean check(Food food);
+
+    public void clear() {
+        food.clear();
+    }
 }
