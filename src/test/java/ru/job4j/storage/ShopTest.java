@@ -20,8 +20,8 @@ public class ShopTest {
                 new GregorianCalendar(2021, Calendar.APRIL, 8), 250.0, 0.0);
         Cheese cheese = new Cheese("Сыр", new GregorianCalendar(2021, Calendar.APRIL, 25),
                 new GregorianCalendar(2021, Calendar.APRIL, 1), 550.0, 0.0);
-        Banana banana = new Banana("Зеленые", new GregorianCalendar(2021, Calendar.APRIL, 18),
-                new GregorianCalendar(2021, Calendar.MARCH, 10), 200.0, 0.0);
+        Banana banana = new Banana("Зеленые", new GregorianCalendar(2021, Calendar.APRIL, 25),
+                new GregorianCalendar(2021, Calendar.MARCH, 17), 200.0, 0.0);
         assertFalse(shop.check(meat));
         assertTrue(shop.check(cheese));
         assertTrue(shop.check(banana));
