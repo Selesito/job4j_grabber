@@ -8,7 +8,7 @@ public abstract class Storage {
     private double percentMax;
     private double percentMin;
 
-    private List<Food> food = new ArrayList<>();
+    private List<Food> foods = new ArrayList<>();
 
     public Storage(double percentMin, double percentMax) {
         this.percentMin = percentMin;
@@ -31,18 +31,18 @@ public abstract class Storage {
         this.percentMin = percentMin;
     }
 
-    public List<Food> getFood() {
-        return food;
+    public List<Food> getFoods() {
+        return foods;
     }
 
-    public void setFood(List<Food> food) {
-        this.food = food;
+    public void setFoods(List<Food> foods) {
+        this.foods = foods;
     }
 
      public boolean add(Food food) {
         boolean result = check(food);
         if (result) {
-            this.food.add(food);
+            this.foods.add(food);
         }
         return result;
     }
@@ -58,6 +58,6 @@ public abstract class Storage {
     public abstract boolean check(Food food);
 
     public void clear() {
-        food.clear();
+        foods.clear();
     }
 }

@@ -32,8 +32,8 @@ public class ControllQualityTest {
                 new GregorianCalendar(2021, Calendar.MARCH, 17), 200.0, 0.0);
         List<Food> foods = Arrays.asList(banana, meat, cheese, apple);
         control.productDistributor(foods);
-        assertEquals(warehouse.getFood().size(), 1);
-        assertEquals(shop.getFood().size(), 2);
+        assertEquals(warehouse.getFoods().size(), 1);
+        assertEquals(shop.getFoods().size(), 2);
     }
 
     @Test
@@ -56,8 +56,8 @@ public class ControllQualityTest {
         cheese.setExpiryDate(new GregorianCalendar(2021, Calendar.APRIL, 17));
         apple.setExpiryDate(new GregorianCalendar(2021, Calendar.APRIL, 15));
         control.resort();
-        assertEquals(warehouse.getFood().size(), 1);
-        assertEquals(shop.getFood().size(), 0);
-        assertEquals(trash.getFood().size(), 3);
+        assertEquals(warehouse.getFoods().size(), 1);
+        assertEquals(shop.getFoods().size(), 0);
+        assertEquals(trash.getFoods().size(), 3);
     }
 }
